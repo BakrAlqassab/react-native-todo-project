@@ -41,7 +41,6 @@ export default function App() {
     <TouchableWithoutFeedback
       onPress={() => {
         Keyboard.dismiss()
-        console.log("Dismissed Keyboard");
       }}
     >
       <View style={styles.container}>
@@ -62,6 +61,7 @@ export default function App() {
               <TodoItem
                 item={{ text: "No Todos" }}
                 pressHanlder={pressHanlder}
+                EmptyList={true}
               />
             )}
           </View>
@@ -78,8 +78,10 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 40,
+    flex:1
   },
   list: {
     marginTop: 20,
+    flex:1,
   },
 });

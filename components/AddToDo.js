@@ -16,14 +16,12 @@ export default function AddToDo({AddNewTodo}: {AddNewTodo: void}) {
         onChangeText={changeHandler}
         style={styles.input}
       />
-
       <Button onPress={() => AddNewTodo(text)} title="Add" color="coral" />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-
     input: {
         marginBottom:10,
         paddingHorizontal:8,
@@ -31,5 +29,4 @@ const styles = StyleSheet.create({
         borderBottomWidth:1,
         borderBottomColor: "#ddd"
     }
-
 })
