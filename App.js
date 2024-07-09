@@ -1,5 +1,5 @@
 import react,{useState} from "react"
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Alert, TouchableWithoutFeedback,Keyboard } from 'react-native';
 import Header from "./components/Header"
 import TodoItem from "./components/TodoItem"
 import AddToDo from "./components/AddToDo"
@@ -21,39 +21,53 @@ export default function App() {
 
   const addNewTodo = (newValue) => {
 
-    if(newValue) {
+    if(newValue && newValue.length > 3) {
       console.log("key");
       console.log(newValue);
       setTodos((prevValues) => [
         {text:newValue, key:Math.random().toString()},
          ...prevValues
         ]);
+    } else {
+
+      Alert.alert("OOPS!", "List text need to have more than 3 charecters!", [
+        {text:"Understood", onPress:()=> console.log("alert closed")}
+      ])
     }
  
   }
 
   return (
-    <View style={styles.container}>
-
-      {/* Header*/}
-      <Header/>
-      <View style={styles.content}>
-        {/* TODO Form*/}
-        <AddToDo AddNewTodo={addNewTodo}/>
-        <View style={styles.list}>
-          {todos.length ?
-          <FlatList 
-              data={todos}
-              renderItem={({item})=> (
-                <TodoItem item={item} pressHanlder={pressHanlder}/>
-              )}
-            />
-    
-:          <TodoItem item={{text:"No Todos"}} pressHanlder={pressHanlder}/>
-          }
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss()
+        console.log("Dismissed Keyboard");
+      }}
+    >
+      <View style={styles.container}>
+        {/* Header*/}
+        <Header />
+        <View style={styles.content}>
+          {/* TODO Form*/}
+          <AddToDo AddNewTodo={addNewTodo} />
+          <View style={styles.list}>
+            {todos.length ? (
+              <FlatList
+                data={todos}
+                renderItem={({ item }) => (
+                  <TodoItem item={item} pressHanlder={pressHanlder} />
+                )}
+              />
+            ) : (
+              <TodoItem
+                item={{ text: "No Todos" }}
+                pressHanlder={pressHanlder}
+              />
+            )}
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
